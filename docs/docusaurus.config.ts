@@ -39,8 +39,7 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/therizwan/llm-guard/tree/main/docs/',
+          editUrl: 'https://github.com/therizwan/llm-guard/tree/docs/docs/',
         },
         blog: {
           showReadingTime: true,
@@ -50,8 +49,7 @@ const config: Config = {
           },
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/therizwan/llm-guard/tree/main/docs/',
+          editUrl: 'https://github.com/therizwan/llm-guard/tree/docs/docs/',
           // Useful options to enforce blogging best practices
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
@@ -78,12 +76,17 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
-          label: 'Tutorial',
+          label: 'Documentation',
         },
         {to: '/blog', label: 'Blog', position: 'left'},
         {
           href: 'https://github.com/therizwan/llm-guard',
           label: 'GitHub',
+          position: 'right',
+        },
+        {
+          href: 'https://www.npmjs.com/package/llm-guard',
+          label: 'NPM',
           position: 'right',
         },
       ],
@@ -95,14 +98,34 @@ const config: Config = {
           title: 'Docs',
           items: [
             {
-              label: 'Tutorial',
-              to: '/docs/intro',
+              label: 'Getting Started',
+              to: '/docs/getting-started',
+            },
+            {
+              label: 'Guards',
+              to: '/docs/guards',
+            },
+            {
+              label: 'Examples',
+              to: '/docs/examples',
+            },
+            {
+              label: 'API',
+              to: '/docs/api',
             },
           ],
         },
         {
           title: 'Community',
           items: [
+            {
+              label: 'GitHub',
+              href: 'https://github.com/therizwan/llm-guard',
+            },
+            {
+              label: 'NPM',
+              href: 'https://www.npmjs.com/package/llm-guard',
+            },
             {
               label: 'Stack Overflow',
               href: 'https://stackoverflow.com/questions/tagged/llm-guard',

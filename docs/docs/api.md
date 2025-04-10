@@ -1,12 +1,12 @@
 ---
 id: api
 title: API Reference
-sidebar_position: 5
+sidebar_position: 4
 ---
 
 # API Reference
 
-This page provides a comprehensive reference for the LLM Guard API.
+This page provides detailed information about the LLM Guard API.
 
 ## LLMGuard
 
@@ -15,239 +15,285 @@ The main class for validating and securing LLM prompts.
 ### Constructor
 
 ```typescript
-constructor(options?: LLMGuardOptions)
+new LLMGuard(options?: LLMGuardOptions)
 ```
 
 #### Parameters
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `options` | `LLMGuardOptions` | Optional configuration options |
+- `options` (optional): Configuration options for the LLM Guard instance.
 
-#### LLMGuardOptions
-
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `defaultLanguage` | `string` | `'en'` | Default language for guards |
-| `logLevel` | `'debug'` \| `'info'` \| `'warn'` \| `'error'` | `'info'` | Logging level |
-| `cacheResults` | `boolean` | `false` | Whether to cache validation results |
-| `timeout` | `number` | `5000` | Timeout in milliseconds for validation |
-| `maxBatchSize` | `number` | `100` | Maximum number of prompts in batch validation |
+```typescript
+interface LLMGuardOptions {
+  // Enable specific guards
+  pii?: boolean;
+  jailbreak?: boolean;
+  profanity?: boolean;
+  promptInjection?: boolean;
+  relevance?: boolean;
+  toxicity?: boolean;
+  
+  // Custom validation rules
+  customRules?: Record<string, (prompt: string) => ValidationResult>;
+  
+  // Guard-specific options
+  relevanceOptions?: RelevanceOptions;
+  piiOptions?: PIIOptions;
+  // ... other guard-specific options
+}
+```
 
 ### Methods
 
-#### addGuard
-
-```typescript
-addGuard(guardName: string, options?: any): void
-```
-
-Adds a guard to the LLM Guard instance.
-
-**Parameters:**
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `guardName` | `string` | Name of the guard to add |
-| `options` | `any` | Optional configuration for the guard |
-
-**Example:**
-
-```typescript
-guard.addGuard('jailbreak', { threshold: 0.8 });
-```
-
-#### addGuards
-
-```typescript
-addGuards(guards: string[] | GuardConfig[]): void
-```
-
-Adds multiple guards to the LLM Guard instance.
-
-**Parameters:**
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `guards` | `string[]` \| `GuardConfig[]` | Array of guard names or configurations |
-
-**Example:**
-
-```typescript
-guard.addGuards(['jailbreak', 'pii', 'toxicity']);
-```
-
 #### validate
-
-```typescript
-validate(prompt: string): Promise<ValidationResult>
-```
 
 Validates a single prompt.
 
-**Parameters:**
+```typescript
+async validate(prompt: string): Promise<ValidationResult>
+```
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `prompt` | `string` | The prompt to validate |
+##### Parameters
 
-**Returns:**
+- `prompt`: The prompt to validate.
 
-A promise that resolves to a `ValidationResult` object.
+##### Returns
 
-**Example:**
+A `ValidationResult` object containing the validation status and any errors.
 
 ```typescript
-const result = await guard.validate('Your prompt here');
+interface ValidationResult {
+  isValid: boolean;
+  prompt: string;
+  errors: string[];
+}
 ```
 
 #### validateBatch
 
-```typescript
-validateBatch(prompts: string[]): Promise<ValidationResult[]>
-```
-
-Validates multiple prompts.
-
-**Parameters:**
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `prompts` | `string[]` | Array of prompts to validate |
-
-**Returns:**
-
-A promise that resolves to an array of `ValidationResult` objects.
-
-**Example:**
+Validates multiple prompts at once.
 
 ```typescript
-const results = await guard.validateBatch([
-  'First prompt',
-  'Second prompt'
-]);
+async validateBatch(prompts: string[]): Promise<ValidationResult[]>
 ```
 
-## ValidationResult
+##### Parameters
 
-The result of a validation operation.
+- `prompts`: An array of prompts to validate.
 
-### Properties
+##### Returns
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `isValid` | `boolean` | Whether the prompt is valid |
-| `issues` | `Issue[]` | Array of issues found in the prompt |
-
-### Methods
-
-#### getIssuesByGuard
-
-```typescript
-getIssuesByGuard(guardName: string): Issue[]
-```
-
-Gets issues from a specific guard.
-
-**Parameters:**
-
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `guardName` | `string` | Name of the guard |
-
-**Returns:**
-
-An array of `Issue` objects from the specified guard.
-
-**Example:**
-
-```typescript
-const jailbreakIssues = result.getIssuesByGuard('jailbreak');
-```
-
-## Issue
-
-Represents an issue found during validation.
-
-### Properties
-
-| Property | Type | Description |
-|----------|------|-------------|
-| `type` | `string` | Type of the issue |
-| `message` | `string` | Description of the issue |
-| `guard` | `string` | Name of the guard that found the issue |
-| `severity` | `'low'` \| `'medium'` \| `'high'` | Severity of the issue |
-| `position` | `{ start: number; end: number }` | Position of the issue in the prompt |
+An array of `ValidationResult` objects, one for each prompt.
 
 ## Guards
 
-### JailbreakGuard
+### PII Guard
 
-Detects attempts to bypass the model's safety measures or ethical constraints.
+Detects personally identifiable information.
 
-#### Options
+```typescript
+interface PIIOptions {
+  sensitivity?: 'low' | 'medium' | 'high';
+  customPatterns?: RegExp[];
+}
+```
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `threshold` | `number` | `0.8` | Detection threshold (0-1) |
-| `customPatterns` | `RegExp[]` | `[]` | Custom patterns to detect |
+### Profanity Guard
 
-### PIIGuard
+Filters inappropriate language.
 
-Detects and protects sensitive personal information.
+```typescript
+interface ProfanityOptions {
+  language?: string;
+  customWords?: string[];
+}
+```
 
-#### Options
+### Jailbreak Guard
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `sensitivity` | `'low'` \| `'medium'` \| `'high'` | `'medium'` | Detection sensitivity |
-| `customPatterns` | `RegExp[]` | `[]` | Custom patterns to detect |
-| `maskPII` | `boolean` | `false` | Whether to mask detected PII |
+Detects attempts to bypass AI safety measures.
 
-### ToxicityGuard
+```typescript
+interface JailbreakOptions {
+  threshold?: number;
+  customPatterns?: RegExp[];
+}
+```
 
-Identifies harmful, offensive, or inappropriate content.
+### Prompt Injection Guard
 
-#### Options
+Identifies attempts to inject malicious instructions.
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `threshold` | `number` | `0.7` | Detection threshold (0-1) |
-| `language` | `string` | `'en'` | Language for detection |
-| `categories` | `string[]` | `['hate', 'threat', 'obscene']` | Categories to detect |
+```typescript
+interface PromptInjectionOptions {
+  sensitivity?: 'low' | 'medium' | 'high';
+  customPatterns?: RegExp[];
+}
+```
 
-### ProfanityGuard
+### Relevance Guard
 
-Filters out inappropriate language and profanity.
+Evaluates the quality and relevance of prompts.
 
-#### Options
+```typescript
+interface RelevanceOptions {
+  minLength?: number;
+  maxLength?: number;
+  minWords?: number;
+  maxWords?: number;
+  fillerWords?: string[];
+}
+```
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `customList` | `string[]` | `[]` | Custom list of profanity |
-| `language` | `string` | `'en'` | Language for detection |
-| `maskProfanity` | `boolean` | `false` | Whether to mask profanity |
+### Toxicity Guard
 
-### PromptInjectionGuard
+Detects harmful or aggressive content.
 
-Detects attempts to inject malicious instructions or code into prompts.
+```typescript
+interface ToxicityOptions {
+  threshold?: number;
+  language?: string;
+}
+```
 
-#### Options
+## CLI
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `threshold` | `number` | `0.8` | Detection threshold (0-1) |
-| `customPatterns` | `RegExp[]` | `[]` | Custom patterns to detect |
-| `checkCommands` | `boolean` | `true` | Whether to check for commands |
+LLM Guard provides a command-line interface for quick validation.
 
-### RelevanceGuard
+### Usage
 
-Ensures that prompts are relevant to the intended task or context.
+```bash
+npx llm-guard [options] <prompt>
+```
 
-#### Options
+### Options
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `context` | `string` | `''` | Context for relevance check |
-| `threshold` | `number` | `0.7` | Relevance threshold (0-1) |
-| `keywords` | `string[]` | `[]` | Keywords for relevance | 
+- `--pii`: Enable PII detection
+- `--jailbreak`: Enable jailbreak detection
+- `--profanity`: Enable profanity filtering
+- `--prompt-injection`: Enable prompt injection detection
+- `--relevance`: Enable relevance checking
+- `--toxicity`: Enable toxicity detection
+- `--config <file>`: Use a configuration file
+- `--batch`: Run in batch mode
+- `--batch-file <file>`: Process prompts from a file
+- `--help`: Show help information
+
+### Configuration File
+
+You can use a JSON configuration file to specify options:
+
+```json
+{
+  "pii": true,
+  "jailbreak": true,
+  "profanity": true,
+  "promptInjection": true,
+  "relevance": true,
+  "toxicity": true,
+  "relevanceOptions": {
+    "minLength": 10,
+    "maxLength": 5000
+  }
+}
+```
+
+## Types
+
+### ValidationResult
+
+```typescript
+interface ValidationResult {
+  isValid: boolean;
+  prompt: string;
+  errors: string[];
+}
+```
+
+### LLMGuardOptions
+
+```typescript
+interface LLMGuardOptions {
+  pii?: boolean;
+  jailbreak?: boolean;
+  profanity?: boolean;
+  promptInjection?: boolean;
+  relevance?: boolean;
+  toxicity?: boolean;
+  customRules?: Record<string, (prompt: string) => ValidationResult>;
+  relevanceOptions?: RelevanceOptions;
+  piiOptions?: PIIOptions;
+  profanityOptions?: ProfanityOptions;
+  jailbreakOptions?: JailbreakOptions;
+  promptInjectionOptions?: PromptInjectionOptions;
+  toxicityOptions?: ToxicityOptions;
+}
+```
+
+## Error Handling
+
+LLM Guard throws specific error types for different scenarios:
+
+```typescript
+class ValidationError extends Error {
+  constructor(message: string, public result: ValidationResult) {
+    super(message);
+    this.name = 'ValidationError';
+  }
+}
+
+class ConfigurationError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'ConfigurationError';
+  }
+}
+```
+
+## Examples
+
+### Basic Usage
+
+```typescript
+import { LLMGuard } from 'llm-guard';
+
+const guard = new LLMGuard({
+  pii: true,
+  jailbreak: true
+});
+
+const result = await guard.validate('My email is user@example.com');
+console.log(result);
+```
+
+### Custom Validation Rules
+
+```typescript
+import { LLMGuard } from 'llm-guard';
+
+const guard = new LLMGuard({
+  customRules: {
+    minLength: (prompt) => {
+      const minLength = 10;
+      const isValid = prompt.length >= minLength;
+      return {
+        isValid,
+        errors: isValid ? [] : [`Prompt must be at least ${minLength} characters long`]
+      };
+    }
+  }
+});
+
+const result = await guard.validate('Short');
+console.log(result);
+```
+
+### Batch Validation
+
+```typescript
+import { LLMGuard } from 'llm-guard';
+
+const guard = new LLMGuard();
+const prompts = ['First prompt', 'Second prompt'];
+const results = await guard.validateBatch(prompts);
+console.log(results);
+``` 

@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Getting Started
 
-LLM Guard is a TypeScript library designed to help you validate and secure your LLM prompts. It provides a comprehensive set of guards to protect against common vulnerabilities and ensure the quality of your prompts.
+Welcome to LLM Guard! This guide will help you get started with using our TypeScript library for validating and securing LLM prompts.
 
 ## Installation
 
@@ -14,6 +14,12 @@ You can install LLM Guard using npm:
 npm install llm-guard
 ```
 
+Or using yarn:
+
+```bash
+yarn add llm-guard
+```
+
 ## Quick Start
 
 Here's a simple example of how to use LLM Guard:
@@ -21,86 +27,63 @@ Here's a simple example of how to use LLM Guard:
 ```typescript
 import { LLMGuard } from 'llm-guard';
 
-// Create a new LLM Guard instance
-const guard = new LLMGuard();
-
-// Add guards to protect against common vulnerabilities
-guard.addGuard('jailbreak');
-guard.addGuard('pii');
-guard.addGuard('toxicity');
+// Create a new LLM Guard instance with all guards enabled
+const guard = new LLMGuard({
+  pii: true,
+  jailbreak: true,
+  profanity: true,
+  promptInjection: true,
+  relevance: true,
+  toxicity: true
+});
 
 // Validate a prompt
-const result = await guard.validate('Your prompt here');
+const result = await guard.validate('How do I write a secure authentication system?');
 
 if (result.isValid) {
-  console.log('Prompt is safe to use');
+  // Use the validated prompt
+  console.log('Prompt is valid:', result.prompt);
 } else {
-  console.log('Prompt contains issues:', result.issues);
+  // Handle validation errors
+  console.error('Prompt validation failed:', result.errors);
 }
-```
 
-## Basic Usage
-
-### Creating a Guard
-
-```typescript
-import { LLMGuard } from 'llm-guard';
-
-const guard = new LLMGuard();
-```
-
-### Adding Guards
-
-LLM Guard provides several built-in guards:
-
-```typescript
-// Add individual guards
-guard.addGuard('jailbreak');
-guard.addGuard('pii');
-guard.addGuard('toxicity');
-guard.addGuard('profanity');
-guard.addGuard('prompt-injection');
-guard.addGuard('relevance');
-
-// Or add multiple guards at once
-guard.addGuards(['jailbreak', 'pii', 'toxicity']);
-```
-
-### Validating Prompts
-
-```typescript
-// Validate a single prompt
-const result = await guard.validate('Your prompt here');
-
-// Validate multiple prompts
-const results = await guard.validateBatch([
+// You can also validate multiple prompts at once
+const batchResult = await guard.validateBatch([
   'First prompt',
-  'Second prompt',
-  'Third prompt'
+  'Second prompt'
 ]);
+console.log(batchResult);
 ```
 
-### Handling Results
+## Using the CLI
 
-```typescript
-const result = await guard.validate('Your prompt here');
+LLM Guard also provides a command-line interface for quick validation:
 
-if (result.isValid) {
-  // Prompt is safe to use
-  console.log('Prompt is valid');
-} else {
-  // Prompt contains issues
-  console.log('Issues found:', result.issues);
-  
-  // Get specific issues
-  const jailbreakIssues = result.getIssuesByGuard('jailbreak');
-  const piiIssues = result.getIssuesByGuard('pii');
-}
+```bash
+# Basic usage
+npx llm-guard "Your prompt here"
+
+# With specific guards enabled
+npx llm-guard --pii --jailbreak "Your prompt here"
+
+# With a config file
+npx llm-guard --config config.json "Your prompt here"
+
+# Batch mode
+npx llm-guard --batch '["First prompt", "Second prompt"]'
+
+# Show help
+npx llm-guard --help
 ```
 
 ## Next Steps
 
-- Learn about the [available guards](/docs/guards)
-- Check out the [API reference](/docs/api)
-- See [examples](/docs/examples) of common use cases
-- Read about [advanced configuration](/docs/configuration) 
+- Check out our [Guards](/docs/guards) documentation to learn about the different types of guards available
+- Explore our [Examples](/docs/examples) to see more use cases
+- Read the [API](/docs/api) documentation for detailed information about all available features
+
+## Need Help?
+
+- Check out our [GitHub repository](https://github.com/therizwan/llm-guard) for more examples and issues
+- Visit our [NPM package page](https://www.npmjs.com/package/llm-guard) for the latest version and updates 

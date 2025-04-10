@@ -21,3 +21,12 @@ slorber:
     linkedin: sebastienlorber
     github: slorber
     newsletter: https://thisweekinreact.com
+
+therizwan:
+  name: Rizwan Saleem
+  title: Software Engineer
+  url: https://github.com/therizwan
+  image_url: https://github.com/therizwan.png
+  page: true
+  socials:
+    github: therizwan

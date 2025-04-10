@@ -1,47 +1,65 @@
----
+ ---
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Introduction to LLM Guard
 
-Let's discover **Docusaurus in less than 5 minutes**.
+Welcome to **LLM Guard**, a powerful TypeScript library designed to help you validate and secure your LLM prompts.
 
-## Getting Started
+## What is LLM Guard?
 
-Get started by **creating a new site**.
+LLM Guard is a comprehensive solution for protecting your LLM applications against common vulnerabilities and ensuring the quality of your prompts. It provides a set of powerful guards that can:
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+- Prevent prompt injection attacks
+- Detect and remove sensitive information
+- Filter out toxic or inappropriate content
+- Ensure prompt relevance and quality
+- And much more!
 
-### What you'll need
+## Why LLM Guard?
 
-- [Node.js](https://nodejs.org/en/download/) version 18.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+As Large Language Models (LLMs) become more integrated into applications, ensuring their safe and responsible use is crucial. LLM Guard helps you:
 
-## Generate a new site
+- **Protect your users**: Prevent malicious prompts that could lead to harmful outputs
+- **Safeguard sensitive data**: Detect and remove personally identifiable information (PII)
+- **Maintain quality**: Ensure prompts are relevant and appropriate
+- **Simplify implementation**: Easy-to-use API with TypeScript support
 
-Generate a new Docusaurus site using the **classic template**.
+## Quick Start
 
-The classic template will automatically be added to your project after you run the command:
-
-```bash
-npm init docusaurus@latest my-website classic
-```
-
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
+Install LLM Guard using npm:
 
 ```bash
-cd my-website
-npm run start
+npm install llm-guard
 ```
 
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
+Basic usage example:
 
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
+```typescript
+import { LLMGuard, JailbreakGuard, PIIGuard } from 'llm-guard';
 
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+// Create a guard instance
+const guard = new LLMGuard();
+
+// Add guards to protect against specific threats
+guard.addGuard(new JailbreakGuard());
+guard.addGuard(new PIIGuard());
+
+// Validate a prompt
+const result = await guard.validate("Your prompt here");
+
+if (result.isValid) {
+  // Use the sanitized prompt
+  console.log(result.sanitizedPrompt);
+} else {
+  // Handle validation failure
+  console.error("Prompt validation failed:", result.reasons);
+}
+```
+
+## Next Steps
+
+- Check out the [Getting Started](/docs/getting-started) guide for detailed installation and setup instructions
+- Explore the available [Guards](/docs/guards) to understand what protections LLM Guard offers
+- See [Examples](/docs/examples) of how to use LLM Guard in different scenarios
+- Review the [API Reference](/docs/api) for detailed documentation of all available methods and options
