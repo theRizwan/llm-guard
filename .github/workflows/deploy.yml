@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - docs
   workflow_dispatch:
 
 permissions:
@@ -20,23 +19,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: 'npm'
       - name: Install dependencies
-        run: |
-          cd docs
-          npm ci
+        working-directory: ./docs
+        run: npm ci
       - name: Build with Docusaurus
-        run: |
-          cd docs
-          npm run build
+        working-directory: ./docs
+        run: npm run build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/build
+          path: ./docs/build
 
   deploy:
     environment:
@@ -47,4 +48,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v3 
+        uses: actions/deploy-pages@v4 
