@@ -1,6 +1,6 @@
 {
   "name": "llm-guard",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A TypeScript library for validating and securing LLM prompts",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -21,18 +21,24 @@
     "security",
     "validation",
     "prompt",
-    "typescript"
+    "jailbreak",
+    "pii",
+    "toxicity",
+    "profanity",
+    "prompt-injection",
+    "relevance"
   ],
   "author": "Rizwan Saleem",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/theRizwan/llm-guard.git"
+    "url": "git+https://github.com/therizwan/llm-guard.git"
   },
   "bugs": {
-    "url": "https://github.com/theRizwan/llm-guard/issues"
+    "url": "https://github.com/therizwan/llm-guard/issues"
   },
   "homepage": "https://therizwan.github.io/llm-guard/",
+  "documentation": "https://therizwan.github.io/llm-guard/",
   "files": [
     "dist",
     "README.md",
