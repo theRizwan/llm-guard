@@ -34,12 +34,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yourusername/llm-guard.git"
+    "url": "git+https://github.com/theRizwan/llm-guard.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/llm-guard/issues"
+    "url": "https://github.com/theRizwan/llm-guard/issues"
   },
-  "homepage": "https://github.com/yourusername/llm-guard#readme",
+  "homepage": "https://github.com/theRizwan/llm-guard#readme",
   "files": [
     "dist",
     "README.md",

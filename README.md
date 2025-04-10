@@ -7,6 +7,12 @@
 
 A TypeScript library for validating and securing LLM prompts. This package provides various guards to protect against common LLM vulnerabilities and misuse.
 
+[![npm version](https://badge.fury.io/js/llm-guard.svg)](https://badge.fury.io/js/llm-guard)
+[![GitHub license](https://img.shields.io/github/license/theRizwan/llm-guard)](https://github.com/theRizwan/llm-guard/blob/main/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/theRizwan/llm-guard)](https://github.com/theRizwan/llm-guard/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/theRizwan/llm-guard)](https://github.com/theRizwan/llm-guard/issues)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/theRizwan/llm-guard)](https://github.com/theRizwan/llm-guard/pulls)
+
 ## Features
 
 - Validate LLM prompts for various security concerns
