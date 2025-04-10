@@ -1,6 +1,6 @@
 # LLM Guard
 
-![LLM Guard Logo](docs/static/img/logo.svg)
+![LLM Guard Logo](assets/llm-guard-logo.png)
 
 Secure your LLM prompts with confidence
 
