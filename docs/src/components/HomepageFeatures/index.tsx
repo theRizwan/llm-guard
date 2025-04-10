@@ -11,32 +11,32 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
+    title: 'Comprehensive Protection',
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        LLM Guard provides a complete set of guards to protect your applications
+        from prompt injection, PII exposure, toxicity, and more.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
+    title: 'Easy Integration',
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Simple API with TypeScript support makes it easy to integrate LLM Guard
+        into your existing applications with minimal code changes.
       </>
     ),
   },
   {
-    title: 'Powered by React',
+    title: 'Highly Customizable',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        Configure guards to match your specific requirements or create your own
+        custom guards to address unique security challenges.
       </>
     ),
   },
