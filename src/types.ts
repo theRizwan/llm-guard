@@ -27,6 +27,8 @@ export interface GuardResult {
 export interface GuardResponse {
   id: string;
   input: string;
+  isValid: boolean;
+  score: number;
   results: GuardResult[];
 }
 
