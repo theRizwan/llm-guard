@@ -101,6 +101,6 @@ if (result.isValid) {
 ## Next Steps
 
 - Learn about the [available guards](/docs/guards)
-- Check out the [API reference](/api)
+- Check out the [API reference](/docs/api)
 - See [examples](/docs/examples) of common use cases
 - Read about [advanced configuration](/docs/configuration) 
