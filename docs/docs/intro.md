@@ -1,7 +1,3 @@
- ---
-sidebar_position: 1
----
-
 # Introduction to LLM Guard
 
 Welcome to **LLM Guard**, a powerful TypeScript library designed to help you validate and secure your LLM prompts.
