@@ -1,0 +1,14 @@
+{
+  "pii": true,
+  "jailbreak": true,
+  "profanity": true,
+  "promptInjection": true,
+  "relevance": true,
+  "toxicity": true,
+  "relevanceOptions": {
+    "minLength": 10,
+    "maxLength": 5000,
+    "minWords": 3,
+    "maxWords": 1000
+  }
+} 

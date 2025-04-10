@@ -1,0 +1,22 @@
+# Source files
+src/
+test/
+examples/
+python/
+
+# Configuration files
+tsconfig.json
+tsup.config.ts
+jest.config.js
+.gitignore
+.npmignore
+context.md
+
+# Development files
+node_modules/
+*.log
+.DS_Store
+coverage/
+
+# Build artifacts
+*.tsbuildinfo 
