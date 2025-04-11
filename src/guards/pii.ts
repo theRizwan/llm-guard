@@ -16,8 +16,13 @@ export class PIIGuard extends BaseGuard {
   }
 
   async validate(text: string): Promise<GuardResult> {
+    // If guard is disabled, return a neutral result
     if (!this.isEnabled()) {
-      return this.createResult(true);
+      return this.createResult(true, 1.0, [{
+        rule: 'pii_detection',
+        message: 'PII detection is disabled',
+        matched: null
+      }]);
     }
 
     const matches: { type: string; value: string }[] = [];
