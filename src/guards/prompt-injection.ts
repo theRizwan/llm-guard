@@ -196,6 +196,7 @@ export class PromptInjectionGuard extends BaseGuard {
       /reset history/i
     ];
 
+    this.suspiciousCommands = new Set([]);
     // this.suspiciousCommands = new Set([
     //   // System tag and instruction bypass commands
     //   'system', 'don\'t', 'deviate', 'test', 'ignore', 'bypass', 'override',
