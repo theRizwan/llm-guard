@@ -196,28 +196,22 @@ export class PromptInjectionGuard extends BaseGuard {
       /reset history/i
     ];
 
-    this.suspiciousCommands = new Set([
-      // System tag and instruction bypass commands
-      'system', 'don\'t', 'simply', 'deviate', 'test', 'ignore', 'bypass', 'override',
-      'pretend', 'act', 'must', 'have', 'should', 'will', 'can', 'may', 'need',
-      // Sensitive information extraction commands
-      'print', 'show', 'reveal', 'display', 'output', 'get', 'fetch', 'retrieve',
-      'extract', 'leak', 'expose', 'share', 'give', 'send', 'transmit', 'transfer',
-      'forward', 'email', 'message', 'text', 'sms', 'what', 'tell', 'say', 'speak',
-      'write', 'type', 'enter', 'input', 'provide', 'supply', 'offer', 'present',
-      'deliver', 'hand', 'pass', 'throw', 'toss', 'fling', 'cast', 'hurl', 'chuck',
-      'lob', 'heave', 'sling', 'shoot', 'fire', 'launch', 'project', 'propel',
-      'catapult',
-      // New suspicious commands
-      'act', 'can', 'could', 'do', 'help', 'ignore', 'pretend', 'simulate', 'try',
-      'run', 'reprogram', 'redefine', 'bypass', 'override', 'forget', 'delete',
-      'output', 'show', 'provide', 'change', 'reveal', 'share', 'explain',
-      'describe', 'tell', 'list', 'outline', 'test', 'experiment', 'research',
-      'suppose', 'maybe', 'why', 'how', 'what', 'where', 'who',
-      // Existing suspicious commands
-      'ignore', 'disregard', 'bypass', 'override', 'reset', 'restart',
-      'clear', 'wipe', 'erase', 'delete', 'remove', 'forget'
-    ]);
+    // this.suspiciousCommands = new Set([
+    //   // System tag and instruction bypass commands
+    //   'system', 'don\'t', 'deviate', 'test', 'ignore', 'bypass', 'override',
+    //   'pretend', 'act', 'must', 'have', 'should', 'will', 'can', 'may', 'need',
+    //   // Sensitive information extraction commands
+    //   'extract', 'leak', 'expose',
+    //   'hand', 'pass', 'throw', 'toss', 'fling', 'cast', 'hurl', 'chuck',
+    //   'lob', 'heave', 'sling', 'shoot', 'fire', 'launch', 'project', 'propel',
+    //   // New suspicious commands
+    //   'ignore', 'pretend','bypass', 'override', 'forget', 'delete',
+    //   'output', 'show', 'provide', 'change', 'reveal', 'share', 'explain',
+    //   'suppose', 'maybe', 'why', 'how', 'what', 'where', 'who',
+    //   // Existing suspicious commands
+    //   'ignore', 'disregard', 'bypass', 'override', 'reset', 'restart',
+    //   'clear', 'wipe', 'erase', 'delete', 'remove', 'forget'
+    // ]);
   }
 
   private detectCommandInjection(text: string): boolean {
