@@ -19,46 +19,40 @@ export class LLMGuard {
   constructor(config: GuardConfig = {}) {
     this.guards = {};
     
-    if (config.pii !== false) {
-      this.guards.pii = new PIIGuard(config.pii);
-    }
-    
-    if (config.profanity !== false) {
-      this.guards.profanity = new ProfanityGuard(config.profanity);
-    }
-    
-    if (config.jailbreak !== false) {
-      this.guards.jailbreak = new JailbreakGuard(config.jailbreak);
-    }
-    
-    if (config.toxicity !== false) {
-      this.guards.toxicity = new ToxicityGuard(config.toxicity);
-    }
-    
-    if (config.relevance !== false) {
-      this.guards.relevance = new RelevanceGuard(config.relevance, config.relevanceOptions);
-    }
-    
-    if (config.promptInjection !== false) {
-      this.guards.promptInjection = new PromptInjectionGuard(config.promptInjection);
-    }
+    // Initialize guards with explicit boolean values
+    this.guards.pii = new PIIGuard(config.pii !== false);
+    this.guards.profanity = new ProfanityGuard(config.profanity !== false);
+    this.guards.jailbreak = new JailbreakGuard(config.jailbreak !== false);
+    this.guards.toxicity = new ToxicityGuard(config.toxicity !== false);
+    this.guards.relevance = new RelevanceGuard(config.relevance !== false, config.relevanceOptions);
+    this.guards.promptInjection = new PromptInjectionGuard(config.promptInjection !== false);
   }
 
   async validate(prompt: string): Promise<GuardResponse> {
     const results = [];
+    let isValid = true;
     let overallScore = 1.0;
 
     for (const guard of Object.values(this.guards)) {
       if (guard && guard.isEnabled()) {
         const result = await guard.validate(prompt);
         results.push(result);
-        overallScore = Math.min(overallScore, result.score || 1.0);
+        
+        // Update overall validation status
+        isValid = isValid && result.valid;
+        
+        // Update overall score (take the minimum score)
+        if (result.score !== undefined) {
+          overallScore = Math.min(overallScore, result.score);
+        }
       }
     }
 
     return {
       id: Date.now().toString(),
       input: prompt,
+      isValid,
+      score: overallScore,
       results
     };
   }
