@@ -18,7 +18,6 @@ export class PromptInjectionGuard extends BaseGuard {
       /\[system\].*bypass/i,
       /\[system\].*override/i,
       /\[system\].*pretend/i,
-      /\[system\].*act as/i,
       /\[system\].*you are now/i,
       /\[system\].*you must/i,
       /\[system\].*you have to/i,
@@ -89,15 +88,10 @@ export class PromptInjectionGuard extends BaseGuard {
       /fling.*password/i,
       /toss.*password/i,
       // General commands
-      /act as/i,
-      /can you/i,
-      /could you/i,
-      /do this/i,
       /help with/i,
       /ignore all/i,
       /pretend to be/i,
       /simulate this/i,
-      /try to/i,
       /run command/i,
       /reprogram yourself/i,
       /redefine the system/i,
@@ -108,11 +102,8 @@ export class PromptInjectionGuard extends BaseGuard {
       /or else/i,
       /true or false/i,
       /then proceed/i,
-      /if then/i,
-      /and then/i,
       /false positives/i,
       // Context modifiers
-      /start fresh/i,
       /continue with/i,
       /new prompt/i,
       /previous context/i,
@@ -134,7 +125,6 @@ export class PromptInjectionGuard extends BaseGuard {
       /explain how/i,
       /describe this/i,
       /tell me/i,
-      /show steps/i,
       /list everything/i,
       /outline the process/i,
       // Hypothetical or testing
@@ -143,8 +133,6 @@ export class PromptInjectionGuard extends BaseGuard {
       /experiment with/i,
       /for research purposes/i,
       // Feral and casual terms
-      /what if/i,
-      /how about/i,
       /let's try/i,
       /why don't you/i,
       /suppose this/i,
@@ -154,9 +142,7 @@ export class PromptInjectionGuard extends BaseGuard {
       // Questioning instructions
       /why would/i,
       /how can/i,
-      /what if/i,
       /where is/i,
-      /who would/i,
       // Existing patterns
       /ignore previous instructions/i,
       /disregard previous/i,
