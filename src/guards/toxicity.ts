@@ -2,19 +2,10 @@ import { BaseGuard } from './base';
 import { GuardResult } from '../types';
 
 export class ToxicityGuard extends BaseGuard {
-  private toxicPatterns: RegExp[];
   private toxicWords: Set<string>;
 
   constructor(enabled: boolean = true) {
     super(enabled);
-    this.toxicPatterns = [
-      /\b(hate|kill|die|death|murder|suicide)\b/i,
-      /\b(racist|sexist|homophobic|discrimination)\b/i,
-      /\b(terror|bomb|explosion|weapon)\b/i,
-      /\b(abuse|torture|pain|suffer)\b/i,
-      /\b(threat|danger|harm|hurt)\b/i
-    ];
-
 
     this.toxicWords = new Set([
       'hate', 'kill', 'die', 'death', 'murder', 'suicide',
@@ -29,13 +20,6 @@ export class ToxicityGuard extends BaseGuard {
     let score = 1.0;
     const words = text.toLowerCase().split(/\s+/);
     
-    // Check for toxic patterns
-    for (const pattern of this.toxicPatterns) {
-      if (pattern.test(text)) {
-        score -= 0.2;
-      }
-    }
-
     // Check for toxic words
     for (const word of words) {
       if (this.toxicWords.has(word)) {
@@ -59,14 +43,6 @@ export class ToxicityGuard extends BaseGuard {
     const isToxic = score < 0.7;
     
     const matches: string[] = [];
-    
-    // Find matching toxic patterns
-    for (const pattern of this.toxicPatterns) {
-      const match = text.match(pattern);
-      if (match) {
-        matches.push(match[0]);
-      }
-    }
 
     // Find matching toxic words
     const words = text.toLowerCase().split(/\s+/);
