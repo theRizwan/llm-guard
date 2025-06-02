@@ -8,12 +8,13 @@ export class ToxicityGuard extends BaseGuard {
   constructor(enabled: boolean = true) {
     super(enabled);
     this.toxicPatterns = [
-      /hate|kill|die|death|murder|suicide/i,
-      /racist|sexist|homophobic|discrimination/i,
-      /terror|bomb|explosion|weapon/i,
-      /abuse|torture|pain|suffer/i,
-      /threat|danger|harm|hurt/i
+      /\b(hate|kill|die|death|murder|suicide)\b/i,
+      /\b(racist|sexist|homophobic|discrimination)\b/i,
+      /\b(terror|bomb|explosion|weapon)\b/i,
+      /\b(abuse|torture|pain|suffer)\b/i,
+      /\b(threat|danger|harm|hurt)\b/i
     ];
+
 
     this.toxicWords = new Set([
       'hate', 'kill', 'die', 'death', 'murder', 'suicide',
