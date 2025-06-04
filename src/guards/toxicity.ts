@@ -9,7 +9,7 @@ export class ToxicityGuard extends BaseGuard {
 
     this.toxicWords = new Set([
       'hate', 'kill', 'die', 'death', 'murder', 'suicide',
-      'racist', 'sexist', 'homophobic', 'discrimination',
+      'racist', 'sexist', 'homophobic',
       'terror', 'bomb', 'explosion', 'weapon',
       'abuse', 'torture', 'pain', 'suffer',
       'threat', 'danger', 'harm', 'hurt'
